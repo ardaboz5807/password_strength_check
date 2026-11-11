@@ -12,7 +12,6 @@ typedef struct {
     bool is_common;
 } PasswordAnalysis;
 
-bool is_special_char(char c);
 bool is_valid(const PasswordAnalysis *password);
 bool has_repetition(const char *password, int limit);
 bool has_sequence(const char *password, int limit);

@@ -4,12 +4,6 @@
 #include <ctype.h>
 #include "analyzer.h"
 
-
-//checks if it has special chars
-bool is_special_char(char c){   
-    return ispunct((unsigned char)c) != 0;
-}
-
 //checks if it has repetitions
 bool has_repetition(const char *password, int limit){
     int length = strlen(password);
@@ -48,12 +42,19 @@ bool has_sequence(const char *password, int limit){
 //checks if the password is a common one
 bool is_common(const char *password){
     FILE *file = fopen("data/common_passwords.txt","r");
+    if(file==NULL){
+        printf("Error: Could not open password list!\n");
+        return false;
+    }
     char example[256];
-    while(fgets(example,sizeof(example),file)){    //liest immer nur bis zum Zeilenumbruch \n
+    while(fgets(example,sizeof(example),file)){    //reads the text until it reaches \n
+        example[strcspn(example, "\r\n")] = '\0';  //deleteing the \n of every example in common_passwords.txt
         if(strcmp(example,password) == 0){
+            fclose(file);
             return true;
         }
     }
+    fclose(file);
     return false;
 }
 
