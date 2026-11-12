@@ -1,6 +1,6 @@
 # PassCheck-C
 
-Ein schlanker **Passwort-Analyzer in C**, der Passwörter anhand ihrer Zeichen und einiger einfacher Regeln untersucht.
+Ein **Passwort-Analyzer in C**, der Passwörter anhand ihrer Zeichen und einiger einfacher Regeln untersucht.
 
 ## Aktuelle Funktionen
 
@@ -11,22 +11,11 @@ Ein schlanker **Passwort-Analyzer in C**, der Passwörter anhand ihrer Zeichen u
 - Prüft Mindestanforderungen: **mindestens 9 Zeichen** sowie jeweils mindestens ein Großbuchstabe, Kleinbuchstabe, eine Ziffer und ein Sonderzeichen.
 - Zeigt die Analyse im Terminal an.
 
-## Kompilieren und starten
-
-Im Projektverzeichnis (wenn `main.c` und `analyzer.c` dort liegen):
-
-```bash
-gcc -std=c11 -Wall -Wextra main.c analyzer.c -o passcheck
-./passcheck
-```
-
-Unter Windows: `passcheck.exe` starten. Die Datei `data/common_passwords.txt` muss relativ zum aktuellen Arbeitsverzeichnis erreichbar sein.
-
-**Aktueller Stand:** Das Testpasswort ist noch direkt in `main.c` festgelegt. Eine Benutzereingabe gibt es noch nicht.
+**Aktueller Stand:** Das Testpasswort ist noch direkt in `main.c` festgelegt. Eine Benutzereingabe gibt es noch nicht. Programm ist noch nicht vollständig
 
 ## Geplante Funktionen
 
-- [ ] **Benutzereingabe:** Passwort direkt im Terminal eingeben, möglichst verdeckt.
+- [ ] **Benutzereingabe:** Passwort direkt im Terminal eingeben
 - [ ] **Entropie:** geschätzte Passwortentropie in **Bit** berechnen.
 - [ ] **Time to Crack:** geschätzte Zeit zum Knacken unter ausdrücklich genannten Annahmen zur Angriffsgeschwindigkeit anzeigen.
 - [ ] **Stärkebewertung:** verständliche Bewertung und konkrete Verbesserungsvorschläge ausgeben.
