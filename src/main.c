@@ -17,8 +17,10 @@ int main(){
     printf("Has repetitions: %d\n", analysis.has_repetition);  //1 = True   0 == False
     printf("Has sequences: %d\n", analysis.has_sequence);
     printf("Is a common one: %d\n", analysis.is_common);
-
-    PasswordAnalysis *value = &analysis;
+    printf("------------------------------------------\n");
+    double entropyBits = calculate_entropy(&analysis);
+    double estimateCrack = estimate_crack_in_seconds(entropyBits);
+    print_readable_time(estimateCrack);
 
     if(is_valid(&analysis)){
         printf("%s is valid password\n", password);

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "analyzer.h"
+#include <math.h>
 
 //checks if it has repetitions
 bool has_repetition(const char *password, int limit){
@@ -58,7 +59,65 @@ bool is_common(const char *password){
     return false;
 }
 
-//gives the analysis of the password
+//calculates the password entropy in bits based on length and character pool size
+double calculate_entropy(const PasswordAnalysis *password){
+
+    //amount of possible outcomes per character
+    int pool_size = 0;
+
+    if(password->lowercase > 0){
+        pool_size += 26;
+    }
+    if(password->uppercase > 0){
+        pool_size += 26;
+    }
+    if(password->digits > 0){
+        pool_size += 10;
+    }
+    if(password->special > 0){
+        pool_size += 32;
+    }
+    if (pool_size == 0 || password->length == 0){
+        return 0.0;
+    }
+    
+    return (double)password->length * log2(pool_size);
+}
+
+// Estimates brute-force cracking time in seconds
+double estimate_crack_in_seconds(const double entropyBits){
+
+    //lets say 10 billion guesses per second
+    double guesses_per_seconds = 10000000000.0;
+
+    double total_combinations = pow(2.0, entropyBits);
+    double average_guesses = total_combinations / 2.0;
+
+    return average_guesses / guesses_per_seconds;
+}
+
+void print_readable_time(double seconds) {
+    if (seconds < 1.0) {
+        printf("Crack Time: Less than a second\n");
+    } else if (seconds < 60.0) {
+        printf("Crack Time: Approx. %.1f seconds\n", seconds);
+    } else if (seconds < 3600.0) {
+        printf("Crack Time: Approx. %.1f minutes\n", seconds / 60.0);
+    } else if (seconds < 86400.0) {
+        printf("Crack Time: Approx. %.1f hours\n", seconds / 3600.0);
+    } else if (seconds < 31536000.0) {
+        printf("Crack Time: Approx. %.1f days\n", seconds / 86400.0);
+    } else if (seconds < 31536000.0 * 1000.0) {
+        printf("Crack Time: Approx. %.1f years\n", seconds / 31536000.0);
+    } else {
+        double years = seconds / 31536000.0;
+        // Zeigt immer die vollen Jahre an (mit %.0f ohne Nachkommastellen, da es bei Millionen Jahren ohnehin egal ist)
+        printf("Crack Time: Approx. %.0f years\n", years);
+    }
+}
+
+
+//gives the row analysis of the password
 PasswordAnalysis passwordAnalysis(const char *password){
     PasswordAnalysis pw = {0};
     size_t length = strlen(password);
