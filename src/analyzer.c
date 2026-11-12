@@ -42,7 +42,7 @@ bool has_sequence(const char *password, int limit){
 
 //checks if the password is a common one
 bool is_common(const char *password){
-    FILE *file = fopen("data/common_passwords.txt","r");
+    FILE *file = fopen("data/common_passwords.txt", "r");
     if(file==NULL){
         printf("Error: Could not open password list!\n");
         return false;
@@ -97,25 +97,26 @@ double estimate_crack_in_seconds(const double entropyBits){
 }
 
 void print_readable_time(double seconds) {
-    if (seconds < 1.0) {
-        printf("Crack Time: Less than a second\n");
+    printf("  Crack Time              : ");
+
+    if (!isfinite(seconds)) {
+        printf("Beyond calculation range\n");
+    } else if (seconds < 1.0) {
+        printf("Less than 1 second\n");
     } else if (seconds < 60.0) {
-        printf("Crack Time: Approx. %.1f seconds\n", seconds);
+        printf("Approx. %.1f seconds\n", seconds);
     } else if (seconds < 3600.0) {
-        printf("Crack Time: Approx. %.1f minutes\n", seconds / 60.0);
+        printf("Approx. %.1f minutes\n", seconds / 60.0);
     } else if (seconds < 86400.0) {
-        printf("Crack Time: Approx. %.1f hours\n", seconds / 3600.0);
+        printf("Approx. %.1f hours\n", seconds / 3600.0);
     } else if (seconds < 31536000.0) {
-        printf("Crack Time: Approx. %.1f days\n", seconds / 86400.0);
-    } else if (seconds < 31536000.0 * 1000.0) {
-        printf("Crack Time: Approx. %.1f years\n", seconds / 31536000.0);
+        printf("Approx. %.1f days\n", seconds / 86400.0);
+    } else if (seconds < 31536000.0 * 1000000.0) {
+        printf("Approx. %.1f years\n", seconds / 31536000.0);
     } else {
-        double years = seconds / 31536000.0;
-        // Zeigt immer die vollen Jahre an (mit %.0f ohne Nachkommastellen, da es bei Millionen Jahren ohnehin egal ist)
-        printf("Crack Time: Approx. %.0f years\n", years);
+        printf("Approx. %.2e years\n", seconds / 31536000.0);
     }
 }
-
 
 //gives the row analysis of the password
 PasswordAnalysis passwordAnalysis(const char *password){

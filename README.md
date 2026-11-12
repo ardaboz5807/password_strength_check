@@ -1,22 +1,40 @@
 # PassCheck-C
 
-Ein **Passwort-Analyzer in C**, der Passwörter anhand ihrer Zeichen und einiger einfacher Regeln untersucht.
+Ein **Passwort-Analyzer in C**, der Passwörter anhand ihrer Zeichen, Muster und verschiedener Sicherheitskriterien untersucht.
 
-## Aktuelle Funktionen
+Das Programm ist funktionsfähig, befindet sich jedoch weiterhin in der Entwicklung.
 
-- Zählt Zeichenlänge, Groß- und Kleinbuchstaben, Ziffern und Sonderzeichen.
+## Funktionen
+
+- Zählt Passwortlänge, Groß- und Kleinbuchstaben, Ziffern und Sonderzeichen.
 - Erkennt **mindestens drei gleiche Zeichen hintereinander** (z. B. `aaa`).
 - Erkennt **aufsteigende Zeichenfolgen** mit mindestens drei Zeichen (z. B. `abc`, `123`).
 - Vergleicht Passwörter mit einer lokalen Liste von **260 Beispiel-Passwörtern**.
 - Prüft Mindestanforderungen: **mindestens 9 Zeichen** sowie jeweils mindestens ein Großbuchstabe, Kleinbuchstabe, eine Ziffer und ein Sonderzeichen.
-- Zeigt die Analyse im Terminal an.
-- Berechnet Passwort-Entropie (Bits) und geschätzte Crack Time.
+- Ermöglicht die **Passworteingabe direkt im Terminal**.
+- Berechnet die **theoretische Passwort-Entropie in Bits**.
+- Schätzt die **Brute-Force-Knackzeit** bei angenommenen 10 Milliarden Versuchen pro Sekunde.
+- Warnt bei häufig verwendeten Passwörtern aus der lokalen Liste.
+- Zeigt alle Analyseergebnisse übersichtlich im Terminal an.
 
-**Aktueller Stand:** Das Testpasswort ist noch direkt in `main.c` festgelegt. Eine Benutzereingabe gibt es noch nicht. Programm ist noch nicht vollständig
+## Installation und Ausführung
 
-## Geplante Funktionen
+GCC wird zum Kompilieren benötigt.
 
-- [ ] **Benutzereingabe:** Passwort direkt im Terminal eingeben
-- [ ] **Stärkebewertung:** verständliche Bewertung und konkrete Verbesserungsvorschläge ausgeben.
+Im Hauptverzeichnis des Projekts:
 
-> **Hinweis:** Das Projekt dient Lernzwecken. Eine kurze Passwortliste und einfache Regeln können die tatsächliche Sicherheit nicht zuverlässig bestimmen. Auch Entropie und Knackzeit sind nur Schätzwerte.
+```bash
+gcc src/main.c src/analyzer.c -o passcheck.exe -lm
+```
+
+Anschließend unter Windows ausführen:
+
+```powershell
+.\passcheck.exe
+```
+
+Die Datei `data/common_passwords.txt` muss vom Arbeitsverzeichnis aus erreichbar sein.
+
+## Hinweis
+
+Dieses Projekt dient Lernzwecken. Die Passwortanalyse kann die tatsächliche Sicherheit eines Passworts nicht zuverlässig bestimmen. Entropie und Crack Time basieren auf einem theoretischen Zufallsmodell und stellen keine Sicherheitsgarantie dar.
